@@ -29,6 +29,7 @@ loader.add('letter', 'assets/letter.json')
         window.title = title;
         title.x = W / 2 - title.width / 2;
         title.y = H / 2;
+        // title.y = 100;
 
 
         stage.addChild(title);
@@ -38,6 +39,14 @@ loader.add('letter', 'assets/letter.json')
 
         app.ticker.add(()=>{
         });
+
+
+        const wordsContainer = new PIXI.Container();
+        wordsContainer.x = 30;
+        wordsContainer.y = H - 300;
+
+        title.setWordsContainer(wordsContainer);
+        stage.addChild(wordsContainer);
 
 
     })

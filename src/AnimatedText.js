@@ -1,6 +1,9 @@
 import * as PIXI from "pixi.js";
 import  gsap from "gsap";
 
+let wordsContainer = null;
+let currentWord = null;
+
 import {fall} from "./tweens/fall";
 import {flatt} from "./tweens/flatt";
 import {rotate} from "./tweens/rotate";
@@ -81,11 +84,7 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
     }
 
-    copyText(){
-        this._eachChar(((ch, i)=>{
-            this.addCharSprite(i)
-        }))
-    }
+
 
     addLetterAnimation(){
         let sheet = resources.letter.spritesheet;
@@ -118,20 +117,18 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         this.children[index] = animation;
     }
 
-    addCharSprite(index){
-
-        const s = new PIXI.Sprite(this._getCharTexture(65));
-        s.x = this.children[index].x;
-        s.y = this.children[index].y - s.height * 0.2;
+    getCharSprite(char){
+        const data = PIXI.extras.BitmapText.fonts[this._font.name];
+        const s = new PIXI.Sprite(this._getCharTexture(char.charCodeAt(0)));
         const scale = this._font.size / data.size;
         s.scale.x = s.scale.y = scale;
-        this.addChild(s);
+
+        return s;
     }
 
     _getCharTexture(charCode){
         const data = PIXI.BitmapText.fonts[this._font.name];
         const texture = data.chars[charCode].texture;
-
         return texture;
     }
 
@@ -275,6 +272,123 @@ export class AnimatedText extends PIXI.extras.BitmapText{
     }
 
 
+    setWordsContainer(container){
+        wordsContainer = container;
+    }
+
+    generateWords(){
+        // neo games
+
+        wordsContainer.removeChildren();
+        currentWord = null;
+        const words = [
+            'manage saneness',
+            'engage gameness',
+            'see sageness',
+        ]
+
+        gsap.to(this, { y : 100, ease : "power3.in", duration : 1, onComplete : start.bind(this)} )
+
+
+
+        let promise = Promise.resolve();
+
+        function start() {
+            for (let i = 0; i < words.length; i++){
+
+                const  word = words[i];
+                promise = promise.then(()=>{
+                    return this.nextWord(word);
+                })
+            }
+        }
+
+        return promise;
+
+    }
+
+    nextWord(word){
+        const t = new PIXI.extras.BitmapText("", {font: "15px bitmap-export"} );
+        wordsContainer.addChild(t);
+
+        if (currentWord){
+            t.y = currentWord.y + currentWord.height;
+        }
+        currentWord = t;
+
+       return this.generateChars(word);
+    }
+
+
+    generateChars(word){
+
+        let promise = Promise.resolve();
+
+        for (let i = 0; i < word.length; i++){
+            const char = word[i];
+            promise = promise.then(()=>{
+                return this.nextChar(char)
+            })
+        }
+
+        return promise;
+    }
+
+
+    nextChar(char){
+        return this.flyChar(char)
+            .then(()=>{
+                currentWord.text = currentWord.text + char;
+            })
+    }
+
+
+    flyChar(char){
+        console.log(char)
+        return new Promise((resolve)=>{
+
+            const sprite = this.getCharSprite(char)
+            wordsContainer.addChild(sprite);
+
+            const localStartPosition  = this.getStartPosition(char);
+
+            // translate local position to global
+
+
+            if (!localStartPosition) return resolve();
+
+
+            // todo fly
+
+            sprite.x =       localStartPosition.x - wordsContainer.x;
+            sprite.y =       localStartPosition.y - wordsContainer.y;
+
+            const duration = 0.5;
+            const easeX = 'sine.in'
+            const easeY = 'power4.in'
+            gsap.to(sprite, {x : currentWord.x + currentWord.width, duration, onComplete, ease : easeX})
+            gsap.to(sprite, {y : currentWord.y - 10, duration, ease : easeY});
+
+            const scaleFactor = 0.5
+            gsap.to(sprite.scale, {x: sprite.scale.x * scaleFactor, y : sprite.scale.y * scaleFactor, duration : duration * 0.5, delay : duration*0.5})
+
+            function onComplete() {
+                resolve();
+                gsap.killTweensOf(sprite);
+                sprite.destroy();
+            }
+        })
+    }
+
+
+
+    getStartPosition(char){
+        const charIndex = this.text.indexOf(char);
+
+        if (charIndex === -1) return null;
+        const global = this.children[charIndex].getGlobalPosition();
+        return global;
+    }
 
 
 

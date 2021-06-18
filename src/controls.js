@@ -15,6 +15,7 @@ export function build(textComponent) {
         ['pulse', ()=>textComponent.pulse()],
         ['circle', ()=>textComponent.circle()],
         ['blow up', ()=>textComponent.blowUp()],
+        ['word', ()=>textComponent.generateWords()],
         ['stopTickAnimations', ()=>textComponent.resetTickAnimation()]
     ]
 
@@ -43,8 +44,6 @@ export function build(textComponent) {
         option.text = value;
         select.appendChild(option)
     }
-
-
 
 
 }
