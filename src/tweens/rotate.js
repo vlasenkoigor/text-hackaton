@@ -1,6 +1,6 @@
 import  gsap from "gsap";
 export function rotate(ch, params = {}) {
-        const {duration = 1, angle = 90} = params
+        const {duration = 1, angle = 360} = params
 
 
         ch.anchor.set(.5);

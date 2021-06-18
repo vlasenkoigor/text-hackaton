@@ -10,6 +10,7 @@ export function build(textComponent) {
     root.appendChild(select);
 
     const animations = [
+        ['entrance', ()=>textComponent.entrance()],
         ['domino', ()=>textComponent.domino()],
         ['pulse', ()=>textComponent.pulse()],
         ['circle', ()=>textComponent.circle()],

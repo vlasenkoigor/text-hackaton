@@ -1,6 +1,6 @@
 import  gsap from "gsap";
 export function fluidDrop(ch, params) {
-    const {tall = 100, duration = 1} = params
+    const {tall = 300, duration = 1} = params
     const startY = ch.ngState.y;
     ch.y = startY - tall;
     // gsap.fromTo(ch.scale, {y : ch.scale.y}, {y: ch.scale.y*2, duration, ease : "linear"})

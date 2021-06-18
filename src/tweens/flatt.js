@@ -5,5 +5,10 @@ export function flatt(ch, params = {}) {
 
     ch.anchor.set(0,1);
     ch.y += ch.height;
-    gsap.fromTo(ch.scale, {y : startScaleY}, {y: startScaleY * 0.5, duration, ease : "bounce.out"})
+
+
+    const tl = gsap.timeline();
+    tl.fromTo(ch.scale, {y : startScaleY}, {y: startScaleY * 0.5, duration, ease : "bounce.out"})
+    tl.fromTo(ch.scale, {y : startScaleY * 0.5}, {y: startScaleY, duration, ease : "bounce.out"},1)
+
 }

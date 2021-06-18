@@ -35,7 +35,16 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
 
     entrance(){
-        const tweens = ['fall', 'flatt']
+        this._eachChar((ch)=>{ch.visible = false})
+        const tweens = ['fall', 'flatt','fluidDrop','fade','rotate','flip','fall','appearLeft'];
+
+        for (let i = 0; i < tweens.length; i++) {
+
+            setTimeout(() => {
+                this.children[i].visible = true;
+                this[tweens[i]](i);
+            },2000*i);
+        }
     }
 
 
