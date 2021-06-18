@@ -13,6 +13,7 @@ export function build(textComponent) {
         ['domino', ()=>textComponent.domino()],
         ['pulse', ()=>textComponent.pulse()],
         ['circle', ()=>textComponent.circle()],
+        ['blow up', ()=>textComponent.blowUp()],
         ['stopTickAnimations', ()=>textComponent.resetTickAnimation()]
     ]
 

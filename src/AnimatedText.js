@@ -27,6 +27,11 @@ export class AnimatedText extends PIXI.extras.BitmapText{
     }
 
 
+    entrance(){
+        const tweens = ['fall', 'flatt']
+    }
+
+
 
     onMouseMove(){
         this.interactive = true;
@@ -49,7 +54,6 @@ export class AnimatedText extends PIXI.extras.BitmapText{
                 });
 
 
-                console.log(elements)
                 elements.forEach((ch)=>{
                     ch.isTapping = true;
                   }
@@ -94,13 +98,20 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
 
     domino(){
-        this._eachChar((ch, i)=>{
-            // this._restoreState(ch);
-            setTimeout(()=>{
-                this.rotate(i, {angle : 40})
-            }, i*200)
+        let cnt = 0;
 
+        this._eachChar((ch, i)=>{
+            console.log(i)
+            // this._restoreState(ch);
+            this.rotate(i, {angle : 40});
         })
+        // for (let i = 0; i<this.children.length; i++){
+        //     this.rotate(0)
+        //     this.rotate(1)
+            // this.rotate(2)
+            // this.rotate(0)
+        // }
+
 
     }
 
@@ -116,7 +127,7 @@ export class AnimatedText extends PIXI.extras.BitmapText{
             this._eachChar((ch, i)=>{
 
                 const angle = (360 / len) * i + delta * 0.2;
-                ch.x = R * Math.cos(toRad(angle));
+                ch.x = R * Math.cos(toRad(angle)) + 200;
                 ch.y = R * Math.sin(toRad(angle));
             })
         }]
@@ -130,16 +141,14 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         const R = 200;
 
 
-
         this._tickCallbacks = [()=>{
             const delta = +new Date() - this.animationStartTime;
             this._eachChar((ch, i)=>{
 
                 if (ch.isTapping){
-                    ch.dirY -= 0.5;
+                    ch.dirY -= 0.6;
 
                     ch.dirY = Math.min(ch.dirY, 4)
-                    console.log(ch.dirY)
                 }
 
                 if (ch.y > ch.ngState.y) {
@@ -163,14 +172,13 @@ export class AnimatedText extends PIXI.extras.BitmapText{
             ch.x = ch.ngState.x;
             ch.y = ch.ngState.y;
             ch.rotation = ch.ngState.rotation;
-            console.log(ch.ngState.x, ch.ngState.y)
+            this._restoreState(ch)
         })
     }
 
     _registerTween(name, tween){
 
         this[name] = (charIndex, params = {})=>{
-            this.resetTickAnimation();
             const ch = this.children[charIndex]
             this._restoreState(ch);
 
@@ -196,7 +204,6 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
             ch.dirY = 0;
 
-            console.log(ch.ngState.x, ch.ngState.y)
         })
     }
 
@@ -206,7 +213,8 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         ch.y = y;
         ch.rotation = rotation;
         ch.anchor.copy(anchor);
-        ch.scale.copy(scale)
+        ch.scale.copy(scale);
+        gsap.killTweensOf(ch);
     }
 
     _eachChar(cb = ()=>{}){

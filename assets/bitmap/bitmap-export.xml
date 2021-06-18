@@ -1,0 +1,20 @@
+<font>
+	<info face="bitmap-export" size="130" />
+	<common lineHeight="130" scaleW="668" scaleH="681" pages="1" />
+	<pages>
+		<page id="0" file="bitmap-export.png" />
+	</pages>
+	<chars count="9">
+		<char id="110" x="455" y="0" width="168" height="375" xoffset="0" yoffset="-205" xadvance="178" /><!-- n -->
+		<char id="101" x="183" y="383" width="166" height="297" xoffset="0" yoffset="-146" xadvance="176" /><!-- e -->
+		<char id="111" x="0" y="354" width="182" height="308" xoffset="0" yoffset="-131" xadvance="192" /><!-- o -->
+		<char id="103" x="267" y="0" width="187" height="382" xoffset="0" yoffset="-146" xadvance="197" /><!-- g -->
+		<char id="97" x="350" y="383" width="162" height="294" xoffset="0" yoffset="-135" xadvance="172" /><!-- a -->
+		<char id="109" x="0" y="0" width="266" height="353" xoffset="0" yoffset="-156" xadvance="276" /><!-- m -->
+		<char id="115" x="513" y="376" width="154" height="286" xoffset="0" yoffset="-156" xadvance="164" /><!-- s -->
+		<char id="32" x="0" y="0" width="0" height="0" xoffset="0" yoffset="0" xadvance="20" /><!--   -->
+		<char id="9" x="0" y="0" width="0" height="0" xoffset="0" yoffset="0" xadvance="160" /><!-- 	 -->
+	</chars>
+	<kernings count="0">
+	</kernings>
+</font>

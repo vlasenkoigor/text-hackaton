@@ -19,9 +19,9 @@ document.body.appendChild(app.view);
 
 const {stage, loader} = app;
 
-loader.add('GameOverFont', 'assets/bitmap/GameOverFont.xml')
+loader.add('bitmap-export', 'assets/bitmap/bitmap-export.xml')
     .load(()=>{
-        const title = new AnimatedText('MEGAME', {font: "35px GameOverFont"} );
+        const title = new AnimatedText('neogames', {font: "35px bitmap-export"} );
         build(title);
 
         window.title = title;
