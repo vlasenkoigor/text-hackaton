@@ -1,13 +1,9 @@
 import * as PIXI from 'pixi.js'
 const W = 473, H = 709;
 import {AnimatedText} from './AnimatedText'
-import * as dat from 'dat.gui';
 import {build} from "./controls";
 import 'pixi-spine';
 
-
-// Creating a GUI with options.
-// var gui = new dat.GUI({name: 'My GUI'});
 
 var spineLoaderOptions = { metadata: { spineAtlasSuffix: '.txt' } };
 
@@ -38,6 +34,7 @@ loader.add('clouds', 'assets/clouds.json', spineLoaderOptions)
         stage.addChild(animation);
         animation.state.setAnimationByName(0, 'idle', true);
         stage.addChild(title);
+        animation.scale.set(0.5)
 
 
         app.ticker.add(()=>{
