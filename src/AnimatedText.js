@@ -67,6 +67,8 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
             var interactionManager = app.renderer.plugins.interaction;
 
+            this.globalPosition = interactionData.data.global;
+
             this._eachChar((ch)=>{
                 ch.isTapping = false;
             })
@@ -182,6 +184,23 @@ export class AnimatedText extends PIXI.extras.BitmapText{
                 ch.x = R * Math.cos(toRad(angle)) + 200;
                 ch.y = R * Math.sin(toRad(angle));
             })
+        }]
+    }
+
+
+    mouseTail(){
+        this._tickCallbacks = [()=>{
+            const x = this.globalPosition.x;
+            const y = this.globalPosition.y - 400;
+
+            this.children[0].x = x ;
+            this.children[0].y = y;
+            const arrY = [15,22,15,17,13,15,13];
+            const arrX = [42,80,130,177,215,282,320];
+
+            for (let i = 1; i < 8; i++){
+                gsap.to(this.children[i], {y : y + arrY[i - 1]  , x:x + arrX[i - 1], duration: 1.1*i, ease : "elastic.out(0.8, 0.2)"});
+            }
         }]
     }
 

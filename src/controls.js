@@ -16,7 +16,8 @@ export function build(textComponent) {
         ['circle', ()=>textComponent.circle()],
         ['blow up', ()=>textComponent.blowUp()],
         ['word', ()=>textComponent.generateWords()],
-        ['stopTickAnimations', ()=>textComponent.resetTickAnimation()]
+        ['stopTickAnimations', ()=>textComponent.resetTickAnimation()],
+        ['mouseTail', ()=>textComponent.mouseTail()]
     ]
 
 
