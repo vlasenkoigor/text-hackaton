@@ -7,7 +7,7 @@ import {build} from "./controls";
 
 
 // Creating a GUI with options.
-var gui = new dat.GUI({name: 'My GUI'});
+// var gui = new dat.GUI({name: 'My GUI'});
 
 
 const app = new PIXI.Application({
