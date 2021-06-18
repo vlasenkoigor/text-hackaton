@@ -20,7 +20,9 @@ document.body.appendChild(app.view);
 const {stage, loader} = app;
 
 loader.add('bitmap-export', 'assets/bitmap/bitmap-export.xml')
-    .load(()=>{
+loader.add('letter', 'assets/letter.json')
+    .load((_,resources)=>{
+        window.resources = resources;
         const title = new AnimatedText('neogames', {font: "35px bitmap-export"} );
         build(title);
 

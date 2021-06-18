@@ -14,7 +14,7 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
         this._tickCallbacks = [];
 
-        this._saveState();
+        this._saveStates();
 
         this._registerTween('fall',fall)
         this._registerTween('flatt',flatt)
@@ -23,6 +23,7 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
         this.onMouseMove();
 
+        this.addLetterAnimation();
         // this.addCharSprite();
     }
 
@@ -69,6 +70,36 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         this._eachChar(((ch, i)=>{
             this.addCharSprite(i)
         }))
+    }
+
+    addLetterAnimation(){
+        let sheet = resources.letter.spritesheet;
+        const animation = new PIXI.extras.AnimatedSprite(sheet.animations['o']);
+        this.addChild(animation)
+        animation.play();
+
+        //find O
+
+        const index = this.text.indexOf('o');
+        const char = this.children[index];
+        animation.scale.set(char.scale.x, char.scale.y)
+        animation.height = animation.height * (char.width / animation.width)
+        animation.width = char.width;
+
+        animation.position.copy(char.position);
+        //correlate pos
+        animation.x-=4;
+        animation.y+=3;
+
+        // correlate scale;
+        const conf = 1.15;
+        animation.scale.x *= conf;
+        animation.scale.y *= conf;
+
+        char.visible = false
+
+        this._saveState(animation);
+        this.children[index] = animation;
     }
 
     addCharSprite(index){
@@ -192,19 +223,23 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         }
     }
 
-    _saveState(){
+    _saveStates(){
         this._eachChar((ch)=>{
-            ch.ngState = {
-                x : ch.x,
-                y : ch.y,
-                rotation : ch.rotation,
-                anchor : ch.anchor.clone(),
-                scale : ch.scale.clone()
-            };
-
-            ch.dirY = 0;
+           this._saveState(ch)
 
         })
+    }
+
+    _saveState(ch){
+        ch.ngState = {
+            x : ch.x,
+            y : ch.y,
+            rotation : ch.rotation,
+            anchor : ch.anchor.clone(),
+            scale : ch.scale.clone()
+        };
+
+        ch.dirY = 0;
     }
 
     _restoreState(ch){
