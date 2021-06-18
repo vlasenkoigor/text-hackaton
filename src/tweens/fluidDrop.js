@@ -3,9 +3,6 @@ export function fluidDrop(ch, params) {
     const {tall = 300, duration = 1} = params
     const startY = ch.ngState.y;
     ch.y = startY - tall;
-    // gsap.fromTo(ch.scale, {y : ch.scale.y}, {y: ch.scale.y*2, duration, ease : "linear"})
-    // gsap.fromTo(ch, {y : startY - tall}, {y: startY,duration, ease : "bounce.out"})
-
 
 
     const tl = gsap.timeline();

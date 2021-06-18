@@ -90,7 +90,8 @@ export class AnimatedText extends PIXI.extras.BitmapText{
     addLetterAnimation(){
         let sheet = resources.letter.spritesheet;
         const animation = new PIXI.extras.AnimatedSprite(sheet.animations['o']);
-        this.addChild(animation)
+        this.addChild(animation);
+        animation.animationSpeed = 0.6 ;
         animation.play();
 
         //find O
@@ -272,6 +273,12 @@ export class AnimatedText extends PIXI.extras.BitmapText{
             cb(ch, i)
         })
     }
+
+
+
+
+
+
 
 }
 
