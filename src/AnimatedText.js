@@ -39,13 +39,21 @@ export class AnimatedText extends PIXI.extras.BitmapText{
 
     entrance(){
         this._eachChar((ch)=>{ch.visible = false})
-        const tweens = ['fall', 'flatt','fade','fluidDrop','rotate','flip','fall','appearLeft'];
+        const tweens = [['fall', {tall : 300}], 'flatt','fade','fluidDrop','rotate','flip',['fall', {tall : -300}],'appearLeft'];
 
         for (let i = 0; i < tweens.length; i++) {
 
             setTimeout(() => {
+                let tweenName, tweenOptions;
+                const tweenParam = tweens[i];
+                if (typeof tweenParam === 'string'){
+                    tweenName = tweenParam;
+                } else {
+                    [tweenName, tweenOptions] = tweenParam;
+                }
+
                 this.children[i].visible = true;
-                this[tweens[i]](i);
+                this[tweenName](i, tweenOptions);
             },1200*i);
         }
     }
@@ -363,7 +371,7 @@ export class AnimatedText extends PIXI.extras.BitmapText{
             sprite.x =       localStartPosition.x - wordsContainer.x;
             sprite.y =       localStartPosition.y - wordsContainer.y;
 
-            const duration = 0.5;
+            const duration = 0.3;
             const easeX = 'sine.in'
             const easeY = 'power4.in'
             gsap.to(sprite, {x : currentWord.x + currentWord.width, duration, onComplete, ease : easeX})
