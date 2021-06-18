@@ -5,6 +5,9 @@ import {fall} from "./tweens/fall";
 import {flatt} from "./tweens/flatt";
 import {rotate} from "./tweens/rotate";
 import {fluidDrop} from "./tweens/fluidDrop";
+import {fade} from "./tweens/fade";
+import {flip} from "./tweens/flip";
+import {appearLeft} from "./tweens/appearLeft";
 
 export class AnimatedText extends PIXI.extras.BitmapText{
     constructor(...param) {
@@ -20,6 +23,9 @@ export class AnimatedText extends PIXI.extras.BitmapText{
         this._registerTween('flatt',flatt)
         this._registerTween('rotate',rotate)
         this._registerTween('fluidDrop',fluidDrop)
+        this._registerTween('fade',fade)
+        this._registerTween('flip',flip)
+        this._registerTween('appearLeft',appearLeft)
 
         this.onMouseMove();
 
